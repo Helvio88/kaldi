@@ -1,2 +1,2 @@
 # kaldi
-Base docker image for [https://github.com/kaldi-asr/kaldi](kaldi)
+Base docker image for [kaldi](https://github.com/kaldi-asr/kaldi)
