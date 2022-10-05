@@ -6,7 +6,7 @@ RUN pip3 install pydub scipy numpy
 RUN git clone https://github.com/kaldi-asr/kaldi.git kaldi --origin upstream
 RUN (cd kaldi/tools && make -j `nproc`)
 RUN (cd kaldi/tools && extras/install_irstlm.sh)
-RUN (cd kaldi/tools && (extras/install_mkl.sh || extras/install_openblas.sh))
+RUN (cd kaldi/tools && (extras/install_mkl.sh || TARGET=ARM64 extras/install_openblas.sh))
 RUN (cd kaldi/src && ./configure --shared)
 RUN (cd kaldi/src && make depend -j `nproc`)
 RUN (cd kaldi/src && make -j `nproc`)
