@@ -5,7 +5,7 @@ RUN apt update && apt upgrade -y && apt install -y git wget curl g++ zlib1g-dev 
 # Make python2.7 the default. Needed to compile kaldi
 RUN ln -s /usr/bin/python2.7 /usr/bin/python
 # The Big Python Dependency One-Liner
-RUN pip3 install pydub scipy gdown torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+RUN pip3 install pydub scipy gdown spleeter torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
 # One-Liner to install vocal-remover
 RUN wget https://github.com/tsurumeso/vocal-remover/releases/download/v5.0.2/vocal-remover-v5.0.2.zip && unzip vocal-remover-v5.0.2.zip && rm vocal-remover-v5.0.2.zip && (cd vocal-remover/ && pip3 install -r requirements.txt)
 # Download and Compile kaldi
