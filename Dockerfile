@@ -58,8 +58,6 @@ RUN git clone --depth 1 https://github.com/kaldi-asr/kaldi.git kaldi && \
     (cd kaldi/src && make depend -j `nproc`) && \
     (cd kaldi/src && make -j `nproc`) && \
     find /kaldi -type f \( -name "*.o" -o -name "*.la" -o -name "*.a" \) -exec rm {} \; && \
-    find /intel -type f -name "*.a" -exec rm {} \; && \
-    find /intel -type f -regex '.*\(_mc.?\|_mic\|_thread\|_ilp64\)\.so' -exec rm {} \; && \
     rm -rf /kaldi/.git
 
 RUN gdown 1aotjNix3YwOK41ck7OTHYgIppD5jP9uK && \
