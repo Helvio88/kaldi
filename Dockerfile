@@ -61,7 +61,7 @@ RUN git clone --depth 1 https://github.com/kaldi-asr/kaldi.git kaldi && \
     find /intel -type f -name "*.a" -exec rm {} \; && \
     find /intel -type f -regex '.*\(_mc.?\|_mic\|_thread\|_ilp64\)\.so' -exec rm {} \; && \
     rm -rf /kaldi/.git
-# Download NUS AutoLyrixAlign AI Models
+
 RUN gdown 1aotjNix3YwOK41ck7OTHYgIppD5jP9uK && \
     tar -xvf NUSAutoLyrixAlign-patched.tar.gz && \
     rm NUSAutoLyrixAlign-patched.tar.gz
