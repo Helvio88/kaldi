@@ -5,15 +5,16 @@ RUN apt update && apt upgrade -y && apt install -y git wget curl g++ zlib1g-dev 
 # Make python2.7 the default. Needed to compile kaldi
 RUN ln -s /usr/bin/python2.7 /usr/bin/python
 # The Big Python Dependency One-Liner
-RUN pip3 install pydub scipy gdown spleeter torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+RUN pip3 install pydub scipy gdown
+RUN if [ `arch` = 'x86_64' ]; then pip3 install spleeter; else pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu; fi
 # One-Liner to install vocal-remover
-RUN wget https://github.com/tsurumeso/vocal-remover/releases/download/v5.0.2/vocal-remover-v5.0.2.zip && unzip vocal-remover-v5.0.2.zip && rm vocal-remover-v5.0.2.zip && (cd vocal-remover/ && pip3 install -r requirements.txt)
+RUN if [ `arch` = 'aarch64' ]; then wget https://github.com/tsurumeso/vocal-remover/releases/download/v5.0.2/vocal-remover-v5.0.2.zip && unzip vocal-remover-v5.0.2.zip && rm vocal-remover-v5.0.2.zip && (cd vocal-remover/ && pip3 install -r requirements.txt); fi
 # Download and Compile kaldi
 RUN git clone https://github.com/kaldi-asr/kaldi.git kaldi --origin upstream
 RUN (cd kaldi/tools && make -j `nproc`)
 RUN (cd kaldi/tools && extras/install_irstlm.sh)
 # Needed for Multiarch
-RUN (cd kaldi/tools && (extras/install_mkl.sh || extras/install_openblas.sh))
+RUN if [ `arch` = 'x86_64' ]; then (cd kaldi/tools && extras/install_mkl.sh); else (cd kaldi/tools && extras/install_openblas.sh); fi
 RUN (cd kaldi/src && ./configure --shared)
 RUN (cd kaldi/src && make depend -j `nproc`)
 RUN (cd kaldi/src && make -j `nproc`)
